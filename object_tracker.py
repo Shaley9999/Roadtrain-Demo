@@ -59,7 +59,6 @@ def main(_argv):
     input_size = FLAGS.size
     video_path = FLAGS.video
 
-
     # load standard tensorflow saved model
 
     saved_model_loaded = tf.saved_model.load(FLAGS.weights, tags=[tag_constants.SERVING])
