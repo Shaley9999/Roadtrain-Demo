@@ -119,6 +119,7 @@ def main(_argv):
             score_threshold=FLAGS.score
         )
 
+
         # convert data to numpy arrays and slice out unused elements
         num_objects = valid_detections.numpy()[0]
         bboxes = boxes.numpy()[0]
