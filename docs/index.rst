@@ -22,6 +22,7 @@ Contents:
    :caption: YOLOv4:
 
    YOLOv4/How_YOLO
+   YOLOv4/count
    YOLOv4/HELPER
 
 .. toctree::
