@@ -167,8 +167,6 @@ detect.py:
     (default: './data/images/kite.jpg')
   --output: path to output folder
     (default: './detections/')
-  --[no]tiny: yolov4 or yolov4-tiny
-    (default: 'False')
   --weights: path to weights file
     (default: './checkpoints/yolov4-416')
   --model: yolov3 or yolov4
@@ -194,8 +192,6 @@ detect_video.py:
     (default: None)
   --output_format: codec used in VideoWriter when saving video to file
     (default: 'XVID)
-  --[no]tiny: yolov4 or yolov4-tiny
-    (default: 'false')
   --weights: path to weights file
     (default: './checkpoints/yolov4-416')
   --model: yolov3 or yolov4
