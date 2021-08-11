@@ -6,19 +6,10 @@ import cv2
 def non_max_suppression(boxes, classes, max_bbox_overlap, scores=None):
     """Suppress overlapping detections.
 
-    Original code from [1]_ has been adapted to include confidence score.
+    Original code from [1] has been adapted to include confidence score.
 
-    .. [1] http://www.pyimagesearch.com/2015/02/16/
-           faster-non-maximum-suppression-python/
-
-    Examples
-    --------
-
-        >>> boxes = [d.roi for d in detections]
-        >>> classes = [d.classes for d in detections]
-        >>> scores = [d.confidence for d in detections]
-        >>> indices = non_max_suppression(boxes, max_bbox_overlap, scores)
-        >>> detections = [detections[i] for i in indices]
+    [1] http://www.pyimagesearch.com/2015/02/16/
+        faster-non-maximum-suppression-python/
 
     Parameters
     ----------

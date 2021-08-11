@@ -56,6 +56,9 @@ the union of the same predicted and ground truth boxes.
     /Images/IoU.png
 
 
+Non-max suppression
+-------------------
+
 Each cell can have multiple bounding boxes typically 5. 
 This means for a 19x19 grid there can be a total of 1805 bounding boxes for 1 image.
 
@@ -66,10 +69,180 @@ scoring boxes will remain.
 
 
 .. image::
-    /Images/nms.png
+    /Images/nms.PNG
 
 
 .. image::
-    /Images/nms2.png
+    /Images/nms2.PNG
+
+Here is some example code of a nms algorithm. 
+Although it can be imported from libraries::
+
+    import numpy as np
+    import cv2
 
 
+    def non_max_suppression(boxes, classes, max_bbox_overlap, scores=None):
+        """Suppress overlapping detections.
+
+        Original code from [1] has been adapted to include confidence score.
+
+        [1] http://www.pyimagesearch.com/2015/02/16/
+            faster-non-maximum-suppression-python/
+            
+        Parameters
+        ----------
+        boxes : ndarray
+            Array of ROIs (x, y, width, height).
+        max_bbox_overlap : float
+            ROIs that overlap more than this values are suppressed.
+        scores : Optional[array_like]
+            Detector confidence score.
+
+        Returns
+        -------
+        List[int]
+            Returns indices of detections that have survived non-maxima suppression.
+
+        """
+        if len(boxes) == 0:
+            return []
+
+        boxes = boxes.astype(np.float)
+        pick = []
+
+        x1 = boxes[:, 0]
+        y1 = boxes[:, 1]
+        x2 = boxes[:, 2] + boxes[:, 0]
+        y2 = boxes[:, 3] + boxes[:, 1]
+
+        area = (x2 - x1 + 1) * (y2 - y1 + 1)
+        if scores is not None:
+            idxs = np.argsort(scores)
+        else:
+            idxs = np.argsort(y2)
+
+        while len(idxs) > 0:
+            last = len(idxs) - 1
+            i = idxs[last]
+            pick.append(i)
+
+            xx1 = np.maximum(x1[i], x1[idxs[:last]])
+            yy1 = np.maximum(y1[i], y1[idxs[:last]])
+            xx2 = np.minimum(x2[i], x2[idxs[:last]])
+            yy2 = np.minimum(y2[i], y2[idxs[:last]])
+
+            w = np.maximum(0, xx2 - xx1 + 1)
+            h = np.maximum(0, yy2 - yy1 + 1)
+
+            overlap = (w * h) / area[idxs[:last]]
+
+            idxs = np.delete(
+                idxs, np.concatenate(
+                    ([last], np.where(overlap > max_bbox_overlap)[0])))
+
+        return pick
+
+
+Making detections
+-----------------
+
+To make detections in the first place there is an entire Convolutional Neural Network
+behind the scenes with many different types of layers and activation functions.
+cspdarknet53 has been developed as a backbone for YOLOv4 and this is what is currently used.
+Code is shown below, I reccomend researching CNNs in more detail and how they are the standard for image recognition::
+
+    def cspdarknet53(input_data):
+        #YOLOV4
+        input_data = common.convolutional(
+            input_data, (3, 3,  3,  32), activate_type="mish")
+        input_data = common.convolutional(
+            input_data, (3, 3, 32,  64), downsample=True, activate_type="mish")
+
+        route = input_data
+        route = common.convolutional(route, (1, 1, 64, 64), activate_type="mish")
+        input_data = common.convolutional(
+            input_data, (1, 1, 64, 64), activate_type="mish")
+        for i in range(1):
+            input_data = common.residual_block(
+                input_data,  64,  32, 64, activate_type="mish")
+        input_data = common.convolutional(
+            input_data, (1, 1, 64, 64), activate_type="mish")
+
+        input_data = tf.concat([input_data, route], axis=-1)
+        input_data = common.convolutional(
+            input_data, (1, 1, 128, 64), activate_type="mish")
+        input_data = common.convolutional(
+            input_data, (3, 3, 64, 128), downsample=True, activate_type="mish")
+        route = input_data
+        route = common.convolutional(route, (1, 1, 128, 64), activate_type="mish")
+        input_data = common.convolutional(
+            input_data, (1, 1, 128, 64), activate_type="mish")
+        for i in range(2):
+            input_data = common.residual_block(
+                input_data, 64,  64, 64, activate_type="mish")
+        input_data = common.convolutional(
+            input_data, (1, 1, 64, 64), activate_type="mish")
+        input_data = tf.concat([input_data, route], axis=-1)
+
+        input_data = common.convolutional(
+            input_data, (1, 1, 128, 128), activate_type="mish")
+        input_data = common.convolutional(
+            input_data, (3, 3, 128, 256), downsample=True, activate_type="mish")
+        route = input_data
+        route = common.convolutional(route, (1, 1, 256, 128), activate_type="mish")
+        input_data = common.convolutional(
+            input_data, (1, 1, 256, 128), activate_type="mish")
+        for i in range(8):
+            input_data = common.residual_block(
+                input_data, 128, 128, 128, activate_type="mish")
+        input_data = common.convolutional(
+            input_data, (1, 1, 128, 128), activate_type="mish")
+        input_data = tf.concat([input_data, route], axis=-1)
+
+        input_data = common.convolutional(
+            input_data, (1, 1, 256, 256), activate_type="mish")
+        route_1 = input_data
+        input_data = common.convolutional(
+            input_data, (3, 3, 256, 512), downsample=True, activate_type="mish")
+        route = input_data
+        route = common.convolutional(route, (1, 1, 512, 256), activate_type="mish")
+        input_data = common.convolutional(
+            input_data, (1, 1, 512, 256), activate_type="mish")
+        for i in range(8):
+            input_data = common.residual_block(
+                input_data, 256, 256, 256, activate_type="mish")
+        input_data = common.convolutional(
+            input_data, (1, 1, 256, 256), activate_type="mish")
+        input_data = tf.concat([input_data, route], axis=-1)
+
+        input_data = common.convolutional(
+            input_data, (1, 1, 512, 512), activate_type="mish")
+        route_2 = input_data
+        input_data = common.convolutional(
+            input_data, (3, 3, 512, 1024), downsample=True, activate_type="mish")
+        route = input_data
+        route = common.convolutional(
+            route, (1, 1, 1024, 512), activate_type="mish")
+        input_data = common.convolutional(
+            input_data, (1, 1, 1024, 512), activate_type="mish")
+        for i in range(4):
+            input_data = common.residual_block(
+                input_data, 512, 512, 512, activate_type="mish")
+        input_data = common.convolutional(
+            input_data, (1, 1, 512, 512), activate_type="mish")
+        input_data = tf.concat([input_data, route], axis=-1)
+
+        input_data = common.convolutional(
+            input_data, (1, 1, 1024, 1024), activate_type="mish")
+        input_data = common.convolutional(input_data, (1, 1, 1024, 512))
+        input_data = common.convolutional(input_data, (3, 3, 512, 1024))
+        input_data = common.convolutional(input_data, (1, 1, 1024, 512))
+
+        input_data = tf.concat([tf.nn.max_pool(input_data, ksize=13, padding='SAME', strides=1), tf.nn.max_pool(
+            input_data, ksize=9, padding='SAME', strides=1), tf.nn.max_pool(input_data, ksize=5, padding='SAME', strides=1), input_data], axis=-1)
+        input_data = common.convolutional(input_data, (1, 1, 2048, 512))
+        input_data = common.convolutional(input_data, (3, 3, 512, 1024))
+        input_data = common.convolutional(input_data, (1, 1, 1024, 512))
+
+        return route_1, route_2, input_data
