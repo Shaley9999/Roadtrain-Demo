@@ -62,16 +62,6 @@ The output flag allows you to save the resulting video of the object tracker run
 
 If you want to run yolov3 set the model flag to ``--model yolov3``, upload the yolov3.weights to the 'data' folder and adjust the weights flag in above commands. (see all the available command line flags and descriptions of them in a below section)
 
-## Running the Tracker with YOLOv4-Tiny
-The following commands will allow you to run yolov4-tiny model. Yolov4-tiny allows you to obtain a higher speed (FPS) for the tracker at a slight cost to accuracy. Make sure that you have downloaded the tiny weights file and added it to the 'data' folder in order for commands to work!
-```
-# save yolov4-tiny model
-python save_model.py --weights ./data/yolov4-tiny.weights --output ./checkpoints/yolov4-tiny-416 --model yolov4 --tiny
-
-# Run yolov4-tiny object tracker
-python object_tracker.py --weights ./checkpoints/yolov4-tiny-416 --model yolov4 --video ./data/video/test.mp4 --output ./outputs/tiny.avi --tiny
-```
-
 ## Resulting Video
 As mentioned above, the resulting video will save to wherever you set the ``--output`` command line flag path to. I always set it to save to the 'outputs' folder. You can also change the type of video saved by adjusting the ``--output_format`` flag, by default it is set to AVI codec which is XVID.
 
@@ -116,12 +106,8 @@ save_model.py:
     (default: None)
   --output_format: codec used in VideoWriter when saving video to file
     (default: 'XVID)
-  --[no]tiny: yolov4 or yolov4-tiny
-    (default: 'false')
   --weights: path to weights file
     (default: './checkpoints/yolov4-416')
-  --framework: what framework to use (tf, trt, tflite)
-    (default: tf)
   --model: yolov3 or yolov4
     (default: yolov4)
   --size: resize images to
@@ -134,6 +120,8 @@ save_model.py:
     (default: False)
   --info: print detailed info about tracked objects
     (default: False)
+  --count: counts the number or objects on the screen (also by class)
+  (default: False)
 ```
 
 ### References  
