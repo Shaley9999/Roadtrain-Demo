@@ -1,5 +1,5 @@
 
-Just Logic
+HELPER
 ++++++++++++
 Random words go here..dsa. d.sa d.sa.d sa.
 
@@ -52,3 +52,4 @@ Subhead3
 ========
 .. image:: 
     /Images/result_tb.png
+

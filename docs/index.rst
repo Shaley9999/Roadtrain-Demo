@@ -3,25 +3,31 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to Road Train Demo's documentation!
-===========================================
-blah blah blah blah **Blah** blah blah *Blah* blah ``Blah`` blah
+**Welcome to Road Train Demo's documentation!**
+++++++++++++++++++++++++++++++++++++++++++++
+
+Contents:
++++++++++++
+
 
 .. toctree::
    :maxdepth: 2
-   :hidden:
-   :caption: Options:
+   :caption: Introduction:
 
-   Options/justcode
-   Options/justlogic
+   Introduction/Setup
+   Introduction/Uses
 
 .. toctree::
    :maxdepth: 2
-   :hidden:
-   :caption: Page2:
+   :caption: YOLOv4:
 
-   Page2/guide
-   Page2/helper
+   YOLOv4/How_YOLO
+   YOLOv4/HELPER
 
+.. toctree::
+   :maxdepth: 2
+   :caption: DEEPSORT:
 
+   DEEPSORT/p1
+   DEEPSORT/HOW
 
