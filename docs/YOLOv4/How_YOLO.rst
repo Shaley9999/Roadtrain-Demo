@@ -38,7 +38,7 @@ Each bounding box has the following parameters
 - The **height** of the box 
 - The **class** of object
 
-Each bounding box is aasociated with a confidence score,
+Each bounding box is associated with a confidence score,
 it is the probability of a class of object in that bounding box.
 
 The image (or frame of video) is split into a grid of many cells.
@@ -56,9 +56,20 @@ the union of the same predicted and ground truth boxes.
     /Images/IoU.png
 
 
-1
-------------
+Each cell can have multiple bounding boxes typically 5. 
+This means for a 19x19 grid there can be a total of 1805 bounding boxes for 1 image.
 
-2
-----------
+Most of the bounding boxes in a cell may not have an object.
+To filter these out the confidence score of the box is used.
+A non-max suppression process will eliminate the unwanted bounding boxes and only the highest
+scoring boxes will remain. 
+
+
+.. image::
+    /Images/nms.png
+
+
+.. image::
+    /Images/nms2.png
+
 
