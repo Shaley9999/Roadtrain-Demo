@@ -48,7 +48,7 @@ class KalmanFilter(object):
 
         # Motion and observation uncertainty are chosen relative to the current
         # state estimate. These weights control the amount of uncertainty in
-        # the model. This is a bit hacky.
+        # the model.
         self._std_weight_position = 1. / 20
         self._std_weight_velocity = 1. / 160
 

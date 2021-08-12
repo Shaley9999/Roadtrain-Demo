@@ -248,15 +248,14 @@ def main(_argv):
             # description
             cv2.putText(frame, bbox_mess, (int(bbox[0]), int(bbox[1]-10)), 0, 0.75, white, thickness)
 
-
         # if enable info flag then print details about each track
             if FLAGS.info:
-                print("Tracker ID: {}, Class: {}, Score: {}, BBox Coords (xmin, ymin, xmax, ymax): {}".format(str(track.track_id), class_name, n_score, (int(bbox[0]), int(bbox[1]), int(bbox[2]), int(bbox[3]))))
+                print("Tracker ID: {}, Class: {}, Score: {}, BBox Coords (xmin, ymin, xmax, ymax): {}".format(
+                    str(track.track_id), class_name, n_score, (int(bbox[0]), int(bbox[1]), int(bbox[2]), int(bbox[3]))))
 
-            
             if current_track == len(scores)-1:
                 pass
-            else: 
+            else:
                 current_track += 1
 
 
@@ -272,7 +271,8 @@ def main(_argv):
         # if output flag is set, save video file
         if FLAGS.output:
             out.write(result)
-            
+
+        # if q is pressed then exit the program
         if cv2.waitKey(1) & 0xFF == ord('q'): break
     cv2.destroyAllWindows()
 

@@ -18,7 +18,7 @@ In the main ``while True`` loop::
 
 
 
-Here is utils.count_objects()::
+Here is ``utils.count_objects()``::
 
     # function to count objects, can return total classes or count per class
     def count_objects(data, by_class=False, allowed_classes=list(read_class_names(cfg.YOLO.CLASSES).values())):
@@ -45,7 +45,7 @@ Here is utils.count_objects()::
         return counts
 
 
-In the draw_bbox function::
+In the ``draw_bbox`` function::
 
     for i in range(num_boxes):
 

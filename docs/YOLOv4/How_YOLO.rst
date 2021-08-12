@@ -1,4 +1,3 @@
-
 How does it Work?
 ++++++++++++
 
@@ -28,7 +27,6 @@ There are two main ways of going about object detection:
 
 Detecting Objects
 ==================
-
 The YOLO detector predicts the class of an object, its bounding boxes
 and the probability of the class of object in the bounding box.
 Each bounding box has the following parameters
@@ -146,7 +144,6 @@ Although it can be imported from libraries::
 
 Making detections
 -----------------
-
 To make detections in the first place there is an entire Convolutional Neural Network
 behind the scenes with many different types of layers and activation functions.
 cspdarknet53 has been developed as a backbone for YOLOv4 and this is what is currently used.

@@ -127,6 +127,7 @@ def main(_argv):
             image = utils.draw_bbox(
                 frame, pred_bbox, FLAGS.info, allowed_classes=allowed_classes)
 
+        # calculate frames per second of running detections
         fps = 1.0 / (time.time() - start_time)
         print("FPS: %.2f" % fps)
         result = np.asarray(image)
@@ -136,9 +137,11 @@ def main(_argv):
         if not FLAGS.dont_show:
             cv2.imshow("result", result)
 
+        # if output flag is set, save video file
         if FLAGS.output:
             out.write(result)
-            
+
+        # if q is pressed then exit the program    
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
     cv2.destroyAllWindows()
