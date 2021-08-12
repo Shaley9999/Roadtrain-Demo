@@ -24,7 +24,7 @@ TensorFlow GPU::
     pip install -r requirements-gpu.txt
 
 Downloading Pre-trained Weights
-================================
+=================================
 YOLOv4 comes with some pre-trained weights to detect the **80** classes
 in the coco dataset. Download the weights
 `here. <https://drive.google.com/open?id=1cewMfusmPjYWbrnuJRuKhPMwRe_b9PaT>`_ 
@@ -32,7 +32,7 @@ in the coco dataset. Download the weights
 Save this in the ``data`` folder in the repository.
 
 Using Custom Trained YOLOv4 Weights
-====================================
+=====================================
 Copy and paste your custom ``.weights`` file into the ``data`` folder
 and copy and paste your custom ``.names`` into the ``data/classes/`` folder.
 
@@ -41,7 +41,7 @@ is on line **13** of ``core/config.py`` file.
 Update the code to point at your custom ``.names`` file.
 
 YOLOv4 and DEEPSORT using TensorFlow (.pb model)
-===================================
+==================================================
 To implement YOLOv4 using TensorFlow,
 first we convert the ``.weights`` into the corresponding TensorFlow model files
 and then run the model::

@@ -6,6 +6,7 @@ DeepSORT vs YOLO
 DeepSORT is a real time object **tracker**
 It is an extension to SORT (Simple Online Realtime Tracker) by adding another distance metric.
 The algorithm works in **two** parts:
+
 - **Detection:** All objects are detected in the frame.
 - **Association:** By looking at distance and predicted velocity a matching is performed for similar detections with respect to the previous frame. 
 
@@ -50,10 +51,10 @@ SORT (Simple Online Realtime Tracker)
 
 SORT is composed of **4** core components:
 
-- Detection
-- Estimation
-- Association
-- Track Identity creation and destruction
+- **Detection**
+- **Estimation**
+- **Association**
+- **Track Identity creation and destruction**
 
 
 Detection
@@ -71,8 +72,10 @@ In assigning detections to existing targets, each target's bounding box geometry
 new location in the latest frame. The assignment cost matrix is then computed as the IOU distance between
 each detection and all predicted boxes from the existing targets.
 
+The assignment is then solved optimally using the `Hungarian algorithm. <https://en.wikipedia.org/wiki/Hungarian_algorithm>`_
+
 Below is iou_matching.py.
-Note: linear_assignment.INFTY_COST = 100000::
+Note: linear_assignment.INFTY_COST = *100000*::
 
     def iou(bbox, candidates):
         """Computer intersection over union.
@@ -149,3 +152,39 @@ Note: linear_assignment.INFTY_COST = 100000::
             candidates = np.asarray([detections[i].tlwh for i in detection_indices])
             cost_matrix[row, :] = 1. - iou(bbox, candidates)
         return cost_matrix
+
+
+Track Identity creation and destruction
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When objects enter and leave the image, unique identities need to be created or destroyed accordingly.
+For creating trackers, we consider any detection with an overlap less than IOUmin to signify the existence
+of an untracked object. The tracker is initialized using the geometry of the bounding box with the velocity set to zero.
+Since the velocity is unobserved at this point the covariance of the velocity component is initialized with large values,
+reflecting this uncertainty. Additionally, the new tracker then undergoes a probationary period where the target needs to be
+associated with detections to accumulate enough evidence in order to prevent tracking of false positives.
+
+Tracks are terminated if they are not detected for TLost frames, you can specify what the amount of frame should be for TLost.
+Should an object reappear, tracking will implicitly resume under a new identity.
+
+
+SORT vs DeepSORT
+------------------
+
+SORT achieves an overall good performance in terms of tracking precision and accuracy.
+However despite the effectiveness of the Kalman filter, it returns a relatively high number of identity switches
+and has a deficiency in tracking through occlusions and different viewpoints.
+
+So, to improve this, the authors of DeepSORT introduced another distance metric based on the “appearance” of the object.
+
+The Appearance feature Vector
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A classifier is trained and built until it achieves a reasonably good accuracy.
+Then the final classification layer is striped leaving behind a dense layer that produces
+a single feature vector, waiting to be classified. This feature vector is known as the appearance descriptor.
+
+After the appearance descriptor is obtained, nearest neighbor queries are applied in the visual appearance
+to establish the measurement-to-track association (MTA).
+MTA is the process of determining the relation between a measurement and an existing track.
+So now we use the `Mahalanobis distance <https://en.wikipedia.org/wiki/Mahalanobis_distance>`_ as opposed to the Euclidean distance for MTA.

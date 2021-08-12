@@ -1,8 +1,8 @@
 How does it Work?
-++++++++++++
+++++++++++++++++++++
 
 Classification vs Regression-based
-===================================
+====================================
 There are two main ways of going about object detection:
 
 #. 
@@ -55,7 +55,7 @@ the union of the same predicted and ground truth boxes.
 
 
 Non-max suppression
--------------------
+--------------------
 
 Each cell can have multiple bounding boxes typically 5. 
 This means for a 19x19 grid there can be a total of 1805 bounding boxes for 1 image.
