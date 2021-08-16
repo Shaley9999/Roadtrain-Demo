@@ -1,7 +1,7 @@
-Count
-++++++
+How to count objects
+++++++++++++++++++++++++
 
-In the main ``while True`` loop::
+In the main ``while True:`` loop::
 
     if FLAGS.count:
         # count objects found

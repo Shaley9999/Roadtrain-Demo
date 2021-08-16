@@ -6,7 +6,23 @@ import core.common as common
 
 
 def darknet53(input_data):
-    #YOLOv3
+    """
+    This function represents the backbone CNN for darknet53 for YOLOV3
+
+    Parameters
+    ----------
+    input_data : object
+        Tensor
+
+    Returns
+    ----------
+    object
+        Returns the  tensor after it has run through some of the layers
+    object
+        Returns the tensor after it has run through most the layers
+    object
+        Returns the final tensor after it has run through all the layers
+    """
     input_data = common.convolutional(input_data, (3, 3,  3,  32))
     input_data = common.convolutional(
         input_data, (3, 3, 32,  64), downsample=True)
@@ -44,7 +60,24 @@ def darknet53(input_data):
 
 
 def cspdarknet53(input_data):
-    #YOLOV4
+    """
+    This function represents the backbone CNN for cspdarknet53 for YOLOV4
+
+    Parameters
+    ----------
+    input_data : object
+        Tensor
+
+
+    Returns
+    ----------
+    object
+        Returns the  tensor after it has run through some of the layers
+    object
+        Returns the tensor after it has run through most the layers
+    object
+        Returns the final tensor after it has run through all the layers
+    """
     input_data = common.convolutional(
         input_data, (3, 3,  3,  32), activate_type="mish")
     input_data = common.convolutional(

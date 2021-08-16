@@ -145,19 +145,6 @@ def main(_argv):
         # custom allowed classes (uncomment line below to customize tracker for only people)
         #allowed_classes = ['person']
 
-        # loop through objects and use class index to get class name, allow only classes in allowed_classes list
-        names = []
-        deleted_indx = []
-        for i in range(num_objects):
-            class_indx = int(classes[i])
-            class_name = class_names[class_indx]
-            if class_name not in allowed_classes:
-                deleted_indx.append(i)
-            else:
-                names.append(class_name)
-        names = np.array(names)
-        count = len(names)
-
         # params for count + title
         by_class = True
         red = (255, 0 , 0)
@@ -177,6 +164,18 @@ def main(_argv):
         textX = int((frame.shape[1] - textsize[0]) / 2)
         cv2.putText(frame, text, (textX, offset), font, font_size, black, font_thickness)
 
+        # loop through objects and use class index to get class name, allow only classes in allowed_classes list
+        names = []
+        deleted_indx = []
+        for i in range(num_objects):
+            class_indx = int(classes[i])
+            class_name = class_names[class_indx]
+            if class_name not in allowed_classes:
+                deleted_indx.append(i)
+            else:
+                names.append(class_name)
+        names = np.array(names)
+        count = len(names)
 
         if FLAGS.count:
             if by_class:
