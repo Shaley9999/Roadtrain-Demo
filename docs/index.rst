@@ -30,3 +30,4 @@ Contents:
    :caption: DEEPSORT:
 
    DEEPSORT/How_DEEPSORT
+   source/modules
