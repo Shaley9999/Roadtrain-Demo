@@ -1,5 +1,5 @@
-deep_sort
-=========
+DeepSORT Docstrings
+=====================
 
 .. toctree::
    :maxdepth: 4
