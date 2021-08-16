@@ -6,6 +6,11 @@
 **Welcome to Road Train Demo's documentation!**
 ++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+Exploring YOLOv4 and DeepSORT for use on the National Railway Museum roadtrain for object detection and tracking
+
+.. image::
+   /Images/roadtrain.jpg
+
 Contents:
 +++++++++++
 
