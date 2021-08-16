@@ -114,6 +114,8 @@ def main(_argv):
         # custom allowed classes (uncomment line below to allow detections for only people)
         #allowed_classes = ['person']
 
+        
+
         if FLAGS.count:
             # count objects found
             counted_classes = utils.count_objects(
@@ -126,6 +128,14 @@ def main(_argv):
             # just draw the bounding boxes
             image = utils.draw_bbox(
                 frame, pred_bbox, FLAGS.info, allowed_classes=allowed_classes)
+
+        # Title
+        text = "YOLOv4"
+        font = cv2.FONT_HERSHEY_COMPLEX_SMALL
+        textsize = cv2.getTextSize(text, font, 1, 2)[0]
+        # get coords based on boundary
+        textX = int((image.shape[1] - textsize[0]) / 2)
+        cv2.putText(image, text, (textX, 40), font, 2, (0,0,0), 2)
 
         # calculate frames per second of running detections
         fps = 1.0 / (time.time() - start_time)

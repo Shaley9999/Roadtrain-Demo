@@ -158,41 +158,58 @@ def main(_argv):
         names = np.array(names)
         count = len(names)
 
+        # params for count + title
         by_class = True
-
         red = (255, 0 , 0)
         blue = (0, 0, 255)
-        white = (255,255,255)
+        white = (255, 255, 255)
+        black = (0, 0, 0)
+        offset = 40
+        indent = 5
+        font_size = 2
+        font_thickness = 2
+
+        # Title
+        text = "DeepSORT"
+        font = cv2.FONT_HERSHEY_COMPLEX_SMALL
+        textsize = cv2.getTextSize(text, font, 1, 2)[0]
+        # get coords based on boundary
+        textX = int((frame.shape[1] - textsize[0]) / 2)
+        cv2.putText(frame, text, (textX, offset), font, font_size, black, font_thickness)
+
 
         if FLAGS.count:
-            offset = 40
-            indent = 5
-            font_size = 2
-            font_thickness = 2
             if by_class:
                 objs = dict(Counter(names))
                 for key, value in objs.items():
                     if key == "bench" or key == "bus" or key == "wine glass" or key == "sandwich" or key == "toothbrush":
-                        cv2.putText(frame, "{}es detected: {}".format(key, value), (indent, offset), cv2.FONT_HERSHEY_COMPLEX_SMALL, font_size, red, font_thickness)
+                        cv2.putText(frame, "{}es detected: {}".format(
+                            key, value), (indent, offset), font, font_size, red, font_thickness)
                         print("Number of {}es: {}".format(key, value))
                     elif key == "sheep" or key == "skis" or key == "scissors":
-                        cv2.putText(frame, "{} detected: {}".format(key, value), (indent, offset), cv2.FONT_HERSHEY_COMPLEX_SMALL, font_size, red, font_thickness)
+                        cv2.putText(frame, "{} detected: {}".format(
+                            key, value), (indent, offset), font, font_size, red, font_thickness)
                         print("Number of {}: {}".format(key, value))
                     elif key == "knife":
-                        cv2.putText(frame, "knives detected: {}".format(value), (indent, offset), cv2.FONT_HERSHEY_COMPLEX_SMALL, font_size, red, font_thickness)
+                        cv2.putText(frame, "knives detected: {}".format(
+                            value), (indent, offset), font, font_size, red, font_thickness)
                         print("Number of knives: ", value)
                     elif key == "mouse":
-                        cv2.putText(frame, "mice detected: {}".format(value), (indent, offset), cv2.FONT_HERSHEY_COMPLEX_SMALL, font_size, red, font_thickness)
+                        cv2.putText(frame, "mice detected: {}".format(
+                            value), (indent, offset), font, font_size, red, font_thickness)
                         print("Number of mice: ", value)
                     elif key == "person":
-                        cv2.putText(frame, "people detected: {}".format(value), (indent, offset), cv2.FONT_HERSHEY_COMPLEX_SMALL, font_size, blue, font_thickness)
+                        cv2.putText(frame, "people detected: {}".format(
+                            value), (indent, offset), font, font_size, blue, font_thickness)
                         print("Number of people: ", value)
                     else:
                         print("Number of {}s: {}".format(key, value))
-                        cv2.putText(frame, "{}s detected: {}".format(key, value), (indent, offset), cv2.FONT_HERSHEY_COMPLEX_SMALL, font_size, red, font_thickness)
+                        cv2.putText(frame, "{}s detected: {}".format(
+                            key, value), (indent, offset), font, font_size, red, font_thickness)
                     offset += 40
             else:
-                cv2.putText(frame, "Objects being tracked: {}".format(count), (indent, offset), cv2.FONT_HERSHEY_COMPLEX_SMALL, font_size, red, font_thickness)
+                cv2.putText(frame, "Objects being tracked: {}".format(
+                    count), (indent, offset), font, font_size, red, font_thickness)
                 print("Objects being tracked: {}".format(count))
 
         # delete detections that are not in allowed_classes

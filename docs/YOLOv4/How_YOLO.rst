@@ -147,7 +147,7 @@ Making detections
 To make detections in the first place there is an entire Convolutional Neural Network
 behind the scenes with many different types of layers and activation functions.
 cspdarknet53 has been developed as a backbone for YOLOv4 and this is what is currently used.
-Code is shown below, I reccomend researching CNNs in more detail and how they are the standard for image recognition::
+The code is shown below. I reccomend researching CNNs in more detail and how they are the standard for image recognition::
 
     def cspdarknet53(input_data):
         #YOLOV4
