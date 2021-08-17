@@ -5,7 +5,7 @@ from . import linear_assignment
 
 
 def iou(bbox, candidates):
-    """Computer intersection over union.
+    """Computes intersection over union.
 
     Parameters
     ----------

@@ -17,6 +17,30 @@ class BatchNormalization(tf.keras.layers.BatchNormalization):
         return super().call(x, training)
 
 def convolutional(input_layer, filters_shape, downsample=False, activate=True, bn=True, activate_type='leaky'):
+    """
+    Applies convultions to input layers
+
+    Parameters
+    ----------
+    input_layer : object
+        A conv layer
+    filters_shape : tuple
+        A tuple of the filter shapes
+    downsample : bool
+        If True then downsamples the layer
+    activate : bool
+        If True then apply an activation function to the layer
+    bn : bool
+        If True then apply BatchNormalization to layer
+    activate_type : str
+        What activation function should be applied
+
+    Returns
+    -------
+    object
+        A convolution
+
+    """
     if downsample:
         input_layer = tf.keras.layers.ZeroPadding2D(((1, 0), (1, 0)))(input_layer)
         padding = 'valid'
@@ -39,10 +63,46 @@ def convolutional(input_layer, filters_shape, downsample=False, activate=True, b
     return conv
 
 def mish(x):
+    """
+    Applies the mish activation function to x
+
+    Parameters
+    ----------
+    x : object
+        A conv layer ready to be activated
+
+    Returns
+    -------
+    object
+        Activated conv layer
+
+    """
     return x * tf.math.tanh(tf.math.softplus(x))
     # return tf.keras.layers.Lambda(lambda x: x*tf.tanh(tf.math.log(1+tf.exp(x))))(x)
 
 def residual_block(input_layer, input_channel, filter_num1, filter_num2, activate_type='leaky'):
+    """
+    Takes input and combines it with a copy of itself that has been applied to the convolutional function twice
+
+    Parameters
+    ----------
+    input_layer : object
+        A conv layer
+    input_channel : int
+        How many input channels
+    filter_num1 : int
+        Filter1 for conv2D within convolutional function
+    filter_num2 : int
+        Filter2 for conv2D within convolutional function
+    activate_type : str
+        What activation function should be applied
+
+    Returns
+    -------
+    object
+        Conv layer
+
+    """
     short_cut = input_layer
     conv = convolutional(input_layer, filters_shape=(1, 1, input_channel, filter_num1), activate_type=activate_type)
     conv = convolutional(conv       , filters_shape=(3, 3, filter_num1,   filter_num2), activate_type=activate_type)

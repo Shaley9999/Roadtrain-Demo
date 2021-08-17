@@ -29,10 +29,11 @@ Contents:
    YOLOv4/How_YOLO
    YOLOv4/count
    YOLOv4/HELPER
+   source/modules_core
 
 .. toctree::
    :maxdepth: 2
    :caption: DEEPSORT:
 
    DEEPSORT/How_DEEPSORT
-   source/modules
+   source/modules_deepsort

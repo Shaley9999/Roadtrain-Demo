@@ -15,12 +15,44 @@ from core.config import cfg
 # ANCHORS = utils.get_anchors(cfg.YOLO.ANCHORS)
 
 def YOLO(input_layer, NUM_CLASS, model='yolov4'):
+    """This function calls either YOLOv4 or YOLOv3
+
+    Parameters
+    ----------
+    input_layer : object
+        Tensor
+    NUM_CLASS : int
+        How many classes there are (80 for coco)
+    model : str
+        States if yolov3 or yolov4 should be run
+
+    Returns
+    ----------
+    list[objects]
+        List of conv layers at differnt stages in the CNN
+
+    """
     if model == 'yolov4':
         return YOLOv4(input_layer, NUM_CLASS)
     elif model == 'yolov3':
         return YOLOv3(input_layer, NUM_CLASS)
 
 def YOLOv3(input_layer, NUM_CLASS):
+    """The Yolov3 function
+
+    Parameters
+    ----------
+    input_layer : object
+        Tensor
+    NUM_CLASS : int
+        How many classes there are (80 for coco)
+
+    Returns
+    ----------
+    list[objects]
+        List of conv layers at differnt stages in the CNN
+
+    """
     route_1, route_2, conv = backbone.darknet53(input_layer)
 
     conv = common.convolutional(conv, (1, 1, 1024, 512))
@@ -63,6 +95,21 @@ def YOLOv3(input_layer, NUM_CLASS):
     return [conv_sbbox, conv_mbbox, conv_lbbox]
 
 def YOLOv4(input_layer, NUM_CLASS):
+    """The Yolov4 function
+
+    Parameters
+    ----------
+    input_layer : object
+        Tensor
+    NUM_CLASS : int
+        How many classes there are (80 for coco)
+
+    Returns
+    ----------
+    list[objects]
+        List of conv layers at differnt stages in the CNN
+
+    """
     route_1, route_2, conv = backbone.cspdarknet53(input_layer)
 
     route = conv
@@ -122,6 +169,31 @@ def YOLOv4(input_layer, NUM_CLASS):
 
 
 def decode_train(conv_output, output_size, NUM_CLASS, STRIDES, ANCHORS, i=0, XYSCALE=[1, 1, 1]):
+    """FILLER
+
+    Parameters
+    ----------
+    conv_output : FILLER
+        FILLER
+    output_size : FILLER
+        FILLER
+    NUM_CLASS : FILLER
+        FILLER
+    STRIDES : FILLER
+        FILLER
+    ANCHORS : FILLER
+        FILLER
+    i : FILLER
+        FILLER
+    XYSCALE : FILLER
+        FILLER
+
+    Returns
+    ----------
+    FILLER
+        FILLER
+
+    """
     conv_output = tf.reshape(conv_output,
                              (tf.shape(conv_output)[0], output_size, output_size, 3, 5 + NUM_CLASS))
 
@@ -145,6 +217,31 @@ def decode_train(conv_output, output_size, NUM_CLASS, STRIDES, ANCHORS, i=0, XYS
     return tf.concat([pred_xywh, pred_conf, pred_prob], axis=-1)
 
 def decode(conv_output, output_size, NUM_CLASS, STRIDES, ANCHORS, i=0, XYSCALE=[1, 1, 1]):
+    """FILLER
+
+    Parameters
+    ----------
+    conv_output : FILLER
+        FILLER
+    output_size : FILLER
+        FILLER
+    NUM_CLASS : FILLER
+        FILLER
+    STRIDES : FILLER
+        FILLER
+    ANCHORS : FILLER
+        FILLER
+    i : FILLER
+        FILLER
+    XYSCALE : FILLER
+        FILLER
+
+    Returns
+    ----------
+    FILLER
+        FILLER
+
+    """
     batch_size = tf.shape(conv_output)[0]
     conv_output = tf.reshape(conv_output,
                              (batch_size, output_size, output_size, 3, 5 + NUM_CLASS))
@@ -175,6 +272,25 @@ def decode(conv_output, output_size, NUM_CLASS, STRIDES, ANCHORS, i=0, XYSCALE=[
 
 
 def filter_boxes(box_xywh, scores, score_threshold=0.4, input_shape = tf.constant([416,416])):
+    """FILLER
+
+    Parameters
+    ----------
+    box_xywh : FILLER
+        FILLER
+    scores : FILLER
+        FILLER
+    score_threshold : FILLER
+        FILLER
+    input_shape : FILLER
+        FILLER
+
+    Returns
+    ----------
+    FILLER
+        FILLER
+
+    """
     scores_max = tf.math.reduce_max(scores, axis=-1)
 
     mask = scores_max >= score_threshold
@@ -202,6 +318,33 @@ def filter_boxes(box_xywh, scores, score_threshold=0.4, input_shape = tf.constan
     return (boxes, pred_conf)
 
 def compute_loss(pred, conv, label, bboxes, STRIDES, NUM_CLASS, IOU_LOSS_THRESH, i=0):
+    """FILLER
+
+    Parameters
+    ----------
+    pred : FILLER
+        FILLER
+    conv : FILLER
+        FILLER
+    label : FILLER
+        FILLER
+    bboxes : FILLER
+        FILLER
+    STRIDES : FILLER
+        FILLER
+    NUM_CLASS : FILLER
+        FILLER
+    IOU_LOSS_THRESH : FILLER
+        FILLER
+    i : FILLER
+        FILLER
+
+    Returns
+    ----------
+    FILLER
+        FILLER
+
+    """
     conv_shape  = tf.shape(conv)
     batch_size  = conv_shape[0]
     output_size = conv_shape[1]
