@@ -181,7 +181,7 @@ def decode_train(conv_output, output_size, NUM_CLASS, STRIDES, ANCHORS, i=0, XYS
         How many classes there are (80 for coco)
     STRIDES : int
         How many pixels to move the neural network's filter
-    ANCHORS : List
+    ANCHORS : List[int]
         List of all the anchors for the training of the NN
     i : int
         Keeps track of which anchor, stride and XYSCALE to be using
@@ -227,13 +227,13 @@ def decode(conv_output, output_size, NUM_CLASS, STRIDES, ANCHORS, i=0, XYSCALE=[
         What size the output should be
     NUM_CLASS : int
         How many classes there are (80 for coco)
-    STRIDES : int
+    STRIDES : ndarray
         How many pixels to move the neural network's filter
-    ANCHORS : List
+    ANCHORS : List[int]
         List of all the anchors for the training of the NN
     i : int
         Keeps track of which anchor, stride and XYSCALE to be using
-    XYSCALE : list
+    XYSCALE : list[floats]
         How much to scale the x and y coords of the data.
 
     Returns
@@ -332,7 +332,7 @@ def compute_loss(pred, conv, label, bboxes, STRIDES, NUM_CLASS, IOU_LOSS_THRESH,
         The labels for the corresponding prediction
     bboxes : Tensor
         The bounding boxes for use in calculating the iou
-    STRIDES : int
+    STRIDES : ndarray
         How many pixels to move the neural network's filter
     NUM_CLASS : int
         FILLER
