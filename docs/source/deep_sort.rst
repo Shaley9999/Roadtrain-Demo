@@ -1,8 +1,6 @@
 deep\_sort package
 ==================
 
-Submodules
-----------
 
 deep\_sort.detection module
 ---------------------------

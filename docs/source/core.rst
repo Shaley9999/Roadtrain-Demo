@@ -1,8 +1,14 @@
 core package
 ===============
 
-Submodules
-----------
+
+core.yolov4 module
+---------------------------
+
+.. automodule:: core.yolov4
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 core.backbone module
 ---------------------------
@@ -48,14 +54,6 @@ core.utils module
 ---------------------------
 
 .. automodule:: core.utils
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-core.yolov4 module
----------------------------
-
-.. automodule:: core.yolov4
    :members:
    :undoc-members:
    :show-inheritance:
