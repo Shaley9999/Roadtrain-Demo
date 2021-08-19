@@ -169,29 +169,29 @@ def YOLOv4(input_layer, NUM_CLASS):
 
 
 def decode_train(conv_output, output_size, NUM_CLASS, STRIDES, ANCHORS, i=0, XYSCALE=[1, 1, 1]):
-    """FILLER
+    """Function to decode the incoming Tensor for training new models
 
     Parameters
     ----------
-    conv_output : FILLER
-        FILLER
-    output_size : FILLER
-        FILLER
-    NUM_CLASS : FILLER
-        FILLER
-    STRIDES : FILLER
-        FILLER
-    ANCHORS : FILLER
-        FILLER
-    i : FILLER
-        FILLER
-    XYSCALE : FILLER
-        FILLER
+    conv_output : Tensor
+        Tensor in training
+    output_size : int
+        What size the output should be
+    NUM_CLASS : int
+        How many classes there are (80 for coco)
+    STRIDES : int
+        How many pixels to move the neural network's filter
+    ANCHORS : List
+        List of all the anchors for the training of the NN
+    i : int
+        Keeps track of which anchor, stride and XYSCALE to be using
+    XYSCALE : list
+        How much to scale the x and y coords of the data.
 
     Returns
     ----------
-    FILLER
-        FILLER
+    List[objects]
+        Concatenated list of predictions and confidence scores
 
     """
     conv_output = tf.reshape(conv_output,
@@ -217,29 +217,31 @@ def decode_train(conv_output, output_size, NUM_CLASS, STRIDES, ANCHORS, i=0, XYS
     return tf.concat([pred_xywh, pred_conf, pred_prob], axis=-1)
 
 def decode(conv_output, output_size, NUM_CLASS, STRIDES, ANCHORS, i=0, XYSCALE=[1, 1, 1]):
-    """FILLER
+    """Function to decode the incoming Tensor
 
     Parameters
     ----------
-    conv_output : FILLER
-        FILLER
-    output_size : FILLER
-        FILLER
-    NUM_CLASS : FILLER
-        FILLER
-    STRIDES : FILLER
-        FILLER
-    ANCHORS : FILLER
-        FILLER
-    i : FILLER
-        FILLER
-    XYSCALE : FILLER
-        FILLER
+    conv_output : Tensor
+        Tensor in training
+    output_size : int
+        What size the output should be
+    NUM_CLASS : int
+        How many classes there are (80 for coco)
+    STRIDES : int
+        How many pixels to move the neural network's filter
+    ANCHORS : List
+        List of all the anchors for the training of the NN
+    i : int
+        Keeps track of which anchor, stride and XYSCALE to be using
+    XYSCALE : list
+        How much to scale the x and y coords of the data.
 
     Returns
     ----------
-    FILLER
-        FILLER
+    Tensor
+        Prediction of variables
+    Tensor
+        Prediction probabilities
 
     """
     batch_size = tf.shape(conv_output)[0]
@@ -272,23 +274,23 @@ def decode(conv_output, output_size, NUM_CLASS, STRIDES, ANCHORS, i=0, XYSCALE=[
 
 
 def filter_boxes(box_xywh, scores, score_threshold=0.4, input_shape = tf.constant([416,416])):
-    """FILLER
+    """Filter out the bounding boxes that are below the score threshold
 
     Parameters
     ----------
-    box_xywh : FILLER
-        FILLER
-    scores : FILLER
-        FILLER
-    score_threshold : FILLER
-        FILLER
-    input_shape : FILLER
-        FILLER
+    box_xywh : Tensor
+        The box coords
+    scores : Tensor
+        The scores for the bounding boxes
+    score_threshold : float
+        The constant for which is the threshold for what is allowed/not 
+    input_shape : list[int]
+        list of dimensions of the input shape
 
     Returns
     ----------
-    FILLER
-        FILLER
+    tuple
+        tuple of the boxes along with the confidence level
 
     """
     scores_max = tf.math.reduce_max(scores, axis=-1)
@@ -318,31 +320,35 @@ def filter_boxes(box_xywh, scores, score_threshold=0.4, input_shape = tf.constan
     return (boxes, pred_conf)
 
 def compute_loss(pred, conv, label, bboxes, STRIDES, NUM_CLASS, IOU_LOSS_THRESH, i=0):
-    """FILLER
+    """Computes the losses of the prediction using the iou functions 
 
     Parameters
     ----------
-    pred : FILLER
+    pred : Tensor
+        The prediction itself 
+    conv : Tensor
+        The conv layer
+    label : Tensor
+        The labels for the corresponding prediction
+    bboxes : Tensor
+        The bounding boxes for use in calculating the iou
+    STRIDES : int
+        How many pixels to move the neural network's filter
+    NUM_CLASS : int
         FILLER
-    conv : FILLER
-        FILLER
-    label : FILLER
-        FILLER
-    bboxes : FILLER
-        FILLER
-    STRIDES : FILLER
-        FILLER
-    NUM_CLASS : FILLER
-        FILLER
-    IOU_LOSS_THRESH : FILLER
-        FILLER
-    i : FILLER
-        FILLER
+    IOU_LOSS_THRESH : float
+        The IOU threshold amount
+    i : int
+        Keeps track of which stride to be using
 
     Returns
     ----------
-    FILLER
-        FILLER
+    int
+        giou_loss
+    float
+        conf_loss
+    object
+        prob_loss
 
     """
     conv_shape  = tf.shape(conv)
