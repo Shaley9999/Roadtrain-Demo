@@ -4,7 +4,7 @@ from easydict import EasyDict as edict
 
 
 __C                           = edict()
-# Consumers can get config by: from config import cfg
+
 
 cfg                           = __C
 

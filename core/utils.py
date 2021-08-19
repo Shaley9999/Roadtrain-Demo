@@ -6,7 +6,19 @@ import tensorflow as tf
 from core.config import cfg
 
 def load_freeze_layer(model='yolov4'):
+    """
+    This function loads which freeze layout to use
 
+    Parameters
+    ----------
+    model : str
+        which model is being used yolo v3/v4
+
+    Returns
+    ----------
+    list[str]
+        A list which id's need to be used
+    """
     if model == 'yolov3':
         freeze_layouts = ['conv2d_58', 'conv2d_66', 'conv2d_74']
     else:
@@ -14,7 +26,22 @@ def load_freeze_layer(model='yolov4'):
     return freeze_layouts
 
 def load_weights(model, weights_file, model_name='yolov4'):
+    """
+    This void function loads the weights
 
+    Parameters
+    ----------
+    model : object
+        The model being used
+    weights_file : .weights
+        Weights for pretrained model
+    model_name : str
+        which model is being used yolo v3/v4
+
+    Returns
+    ----------
+    None
+    """
     if model_name == 'yolov3':
         layer_size = 75
         output_pos = [58, 66, 74]

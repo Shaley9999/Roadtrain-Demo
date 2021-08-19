@@ -1,5 +1,6 @@
 How to count objects
 ++++++++++++++++++++++
+Here is the code for counting objects while the deepSORT algorithm is running
 
 In the main ``while True:`` loop::
 

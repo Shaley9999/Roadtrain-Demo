@@ -173,7 +173,7 @@ def decode_train(conv_output, output_size, NUM_CLASS, STRIDES, ANCHORS, i=0, XYS
 
     Parameters
     ----------
-    conv_output : Tensor
+    conv_output : object
         Tensor in training
     output_size : int
         What size the output should be
@@ -221,7 +221,7 @@ def decode(conv_output, output_size, NUM_CLASS, STRIDES, ANCHORS, i=0, XYSCALE=[
 
     Parameters
     ----------
-    conv_output : Tensor
+    conv_output : object
         Tensor in training
     output_size : int
         What size the output should be
@@ -238,9 +238,9 @@ def decode(conv_output, output_size, NUM_CLASS, STRIDES, ANCHORS, i=0, XYSCALE=[
 
     Returns
     ----------
-    Tensor
+    object
         Prediction of variables
-    Tensor
+    object
         Prediction probabilities
 
     """
@@ -278,9 +278,9 @@ def filter_boxes(box_xywh, scores, score_threshold=0.4, input_shape = tf.constan
 
     Parameters
     ----------
-    box_xywh : Tensor
+    box_xywh : object
         The box coords
-    scores : Tensor
+    scores : object
         The scores for the bounding boxes
     score_threshold : float
         The constant for which is the threshold for what is allowed/not 
@@ -324,13 +324,13 @@ def compute_loss(pred, conv, label, bboxes, STRIDES, NUM_CLASS, IOU_LOSS_THRESH,
 
     Parameters
     ----------
-    pred : Tensor
+    pred : object
         The prediction itself 
-    conv : Tensor
+    conv : object
         The conv layer
-    label : Tensor
+    label : object
         The labels for the corresponding prediction
-    bboxes : Tensor
+    bboxes : object
         The bounding boxes for use in calculating the iou
     STRIDES : ndarray
         How many pixels to move the neural network's filter
