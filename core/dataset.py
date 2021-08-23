@@ -40,6 +40,8 @@ class Dataset(object):
         self.batch_count = 0
 
     def load_annotations(self):
+        """TEST
+        """
         with open(self.annot_path, "r") as f:
             txt = f.readlines()
             if self.dataset_type == "converted_coco":
@@ -180,6 +182,9 @@ class Dataset(object):
                 raise StopIteration
 
     def random_horizontal_flip(self, image, bboxes):
+        """TEST
+        Random hoz flip
+        """
         if random.random() < 0.5:
             _, w, _ = image.shape
             image = image[:, ::-1, :]
@@ -188,6 +193,9 @@ class Dataset(object):
         return image, bboxes
 
     def random_crop(self, image, bboxes):
+        """TEST
+        Random crop
+        """
         if random.random() < 0.5:
             h, w, _ = image.shape
             max_bbox = np.concatenate(
@@ -224,6 +232,9 @@ class Dataset(object):
         return image, bboxes
 
     def random_translate(self, image, bboxes):
+        """TEST
+        Random translate
+        """
         if random.random() < 0.5:
             h, w, _ = image.shape
             max_bbox = np.concatenate(
@@ -251,6 +262,9 @@ class Dataset(object):
         return image, bboxes
 
     def parse_annotation(self, annotation):
+        """TEST
+        Parse annotation
+        """
         line = annotation.split()
         image_path = line[0]
         if not os.path.exists(image_path):
@@ -287,6 +301,9 @@ class Dataset(object):
 
 
     def preprocess_true_boxes(self, bboxes):
+        """TEST
+        Pre pro true boxes
+        """
         label = [
             np.zeros(
                 (
