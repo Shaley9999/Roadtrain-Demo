@@ -102,6 +102,25 @@ class ImageEncoder(object):
 
 def create_box_encoder(model_filename, input_name="images",
                        output_name="features", batch_size=32):
+    """Create the bounding box encoder
+
+    Parameters
+    ----------
+    model_filename : str
+        The filename for the model
+    input_name : str
+        The input name. Default = "images"
+    output_name : str
+        The output name. Default = "features"
+    batch_size : int
+        The Batch size for the encoder. Default = 32
+
+    Returns
+    -------
+    function 
+        The function encoder is run and returned
+
+    """
     image_encoder = ImageEncoder(model_filename, input_name, output_name)
     image_shape = image_encoder.image_shape
 
@@ -115,6 +134,7 @@ def create_box_encoder(model_filename, input_name="images",
                     0., 255., image_shape).astype(np.uint8)
             image_patches.append(patch)
         image_patches = np.asarray(image_patches)
+        print(type(image_encoder(image_patches, batch_size)))
         return image_encoder(image_patches, batch_size)
 
     return encoder
@@ -208,6 +228,11 @@ def parse_args():
 
 
 def main():
+    """ Main function that calls:
+        parse_args()
+        create_box_encoder
+        generate_detections
+    """
     args = parse_args()
     encoder = create_box_encoder(args.model, batch_size=32)
     generate_detections(encoder, args.mot_dir, args.output_dir,
