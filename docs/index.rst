@@ -36,4 +36,5 @@ Contents:
    :caption: DEEPSORT:
 
    DEEPSORT/How_DEEPSORT
+   DEEPSORT/count
    source/modules_deepsort

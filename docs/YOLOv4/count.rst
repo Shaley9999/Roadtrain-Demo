@@ -1,6 +1,8 @@
 How to count objects
 ++++++++++++++++++++++++
 
+Here is the code related to counting objects for YOLOv4
+
 In the main ``while True:`` loop::
 
     if FLAGS.count:

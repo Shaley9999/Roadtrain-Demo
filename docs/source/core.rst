@@ -3,7 +3,7 @@ core package
 
 
 core.yolov4 module DONE But not showing!
----------------------------
+------------------------------------------
 
 .. automodule:: core.yolov4
    :members:
@@ -27,7 +27,7 @@ core.common module
    :show-inheritance:
 
 core.dataset module Half DONE
----------------------------
+------------------------------
 
 .. automodule:: core.dataset 
    :members:
@@ -35,7 +35,7 @@ core.dataset module Half DONE
    :show-inheritance:
 
 core.utils\_y module Half DONE
----------------------------
+-------------------------------
 
 .. automodule:: core.utils_y
    :members:
@@ -43,7 +43,7 @@ core.utils\_y module Half DONE
    :show-inheritance:
 
 core.utils module Half DONE
----------------------------
+----------------------------
 
 .. automodule:: core.utils
    :members:

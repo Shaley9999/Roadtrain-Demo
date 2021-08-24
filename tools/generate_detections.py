@@ -39,13 +39,13 @@ def extract_image_patch(image, bbox, patch_shape):
         This parameter can be used to enforce a desired patch shape
         (height, width). First, the `bbox` is adapted to the aspect ratio
         of the patch shape, then it is clipped at the image boundaries.
-        If None, the shape is computed from :arg:`bbox`.
+        If None, the shape is computed from `bbox`.
 
     Returns
     -------
     ndarray | NoneType
-        An image patch showing the :arg:`bbox`, optionally reshaped to
-        :arg:`patch_shape`.
+        An image patch showing the `bbox`, optionally reshaped to
+        `patch_shape`.
         Returns None if the bounding box is empty or fully outside of the image
         boundaries.
 
