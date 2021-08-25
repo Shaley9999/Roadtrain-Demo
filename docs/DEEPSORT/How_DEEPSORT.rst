@@ -164,7 +164,7 @@ Since the velocity is unobserved at this point the covariance of the velocity co
 reflecting this uncertainty. Additionally, the new tracker then undergoes a probationary period where the target needs to be
 associated with detections to accumulate enough evidence in order to prevent tracking of false positives.
 
-Tracks are terminated if they are not detected for TLost frames, you can specify what the amount of frame should be for TLost.
+Tracks are terminated if they are not detected for TLost frames, you can specify what the amount of frames should be for TLost.
 Should an object reappear, tracking will implicitly resume under a new identity.
 
 

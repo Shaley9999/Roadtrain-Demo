@@ -3,6 +3,8 @@ Setup
 
 **Using Conda (What I used):**
 
+Download `Anaconda3. <https://www.anaconda.com/products/individual>`_
+
 Tensorflow CPU::
 
     conda env create -f conda-cpu.yml

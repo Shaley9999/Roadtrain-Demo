@@ -28,7 +28,6 @@ Contents:
 
    YOLOv4/How_YOLO
    YOLOv4/count
-   YOLOv4/HELPER
    source/modules_core
 
 .. toctree::
