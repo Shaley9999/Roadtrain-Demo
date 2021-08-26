@@ -49,31 +49,26 @@ Here is ``utils.count_objects()``::
 
 In the ``draw_bbox`` function::
 
-    for i in range(num_boxes):
-
-        # SKIPPED Code
-
-        if counted_classes != None:
-        height_ratio = int(image_h / 25) + 5
-        offset = 15
+    if counted_classes != None:
         for key, value in counted_classes.items():
             if key == "bench" or key == "bus" or key == "wine glass" or key == "sandwich" or key == "toothbrush":
-                cv2.putText(image, "{}es detected: {}".format(key, value), (5, offset),
-                            cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (0, 255, 0), 2)
+                cv2.putText(image, "{}es detected: {}".format(key, value), (indent, offset),
+                            cv2.FONT_HERSHEY_COMPLEX_SMALL, font_size, red, font_thickness)
             elif key == "sheep" or key == "skis" or key == "scissors":
-                cv2.putText(image, "{} detected: {}".format(key, value), (5, offset),
-                            cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (0, 255, 0), 2)
+                cv2.putText(image, "{} detected: {}".format(key, value), (indent, offset),
+                            cv2.FONT_HERSHEY_COMPLEX_SMALL, font_size, red, font_thickness)
             elif key == "knife":
-                cv2.putText(image, "knives detected: {}".format(value), (5, offset),
-                            cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (0, 255, 0), 2)
+                cv2.putText(image, "knives detected: {}".format(value), (indent, offset),
+                            cv2.FONT_HERSHEY_COMPLEX_SMALL, font_size, red, font_thickness)
             elif key == "mouse":
-                cv2.putText(image, "mice detected: {}".format(value), (5, offset),
-                            cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (0, 255, 0), 2)
+                cv2.putText(image, "mice detected: {}".format(value), (indent, offset),
+                            cv2.FONT_HERSHEY_COMPLEX_SMALL, font_size, red, font_thickness)
             elif key == "person":
-                cv2.putText(image, "people detected: {}".format(value), (5, offset),
-                            cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (0, 255, 0), 2)
+                cv2.putText(image, "people detected: {}".format(value), (indent, offset),
+                            cv2.FONT_HERSHEY_COMPLEX_SMALL, font_size, blue, font_thickness)
             else:
-                cv2.putText(image, "{}s detected: {}".format(key, value), (5, offset),
-                            cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (0, 255, 0), 2)
-            offset += height_ratio
+                cv2.putText(image, "{}s detected: {}".format(key, value), (indent, offset),
+                            cv2.FONT_HERSHEY_COMPLEX_SMALL, font_size, red, font_thickness)
+            offset += 40
+
     return image
