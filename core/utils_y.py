@@ -163,6 +163,15 @@ def draw_bbox(image, bboxes, info=False, counted_classes=None, show_label=True, 
     random.shuffle(colors)
     random.seed(None)
 
+    # params for use in counting + output text to screen
+    red = (255, 0 , 0)
+    blue = (0, 0, 255)
+    white = (255,255,255)
+    offset = 40
+    font_thickness = 2
+    font_size = 2
+    indent = 5
+
     out_boxes, out_scores, out_classes, num_boxes = bboxes
     for i in range(num_boxes):
         if int(out_classes[i]) < 0 or int(out_classes[i]) > num_classes:
@@ -193,16 +202,7 @@ def draw_bbox(image, bboxes, info=False, counted_classes=None, show_label=True, 
                     c3[1])), bbox_color, -1)  # filled
 
                 cv2.putText(image, bbox_mess, (c1[0], np.float32(c1[1] - 2)), cv2.FONT_HERSHEY_SIMPLEX,
-                            fontScale, (0, 0, 0), bbox_thick // 2, lineType=cv2.LINE_AA)
-
-            # params for use in counting + output text to screen
-            red = (255, 0 , 0)
-            blue = (0, 0, 255)
-            white = (255,255,255)
-            offset = 40
-            font_thickness = 2
-            font_size = 2
-            indent = 5
+                            fontScale, white, bbox_thick // 2, lineType=cv2.LINE_AA)
 
             if counted_classes != None:
                 for key, value in counted_classes.items():
