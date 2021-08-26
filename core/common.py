@@ -39,7 +39,6 @@ def convolutional(input_layer, filters_shape, downsample=False, activate=True, b
     -------
     object
         A convolution
-
     """
     if downsample:
         input_layer = tf.keras.layers.ZeroPadding2D(((1, 0), (1, 0)))(input_layer)
@@ -75,7 +74,6 @@ def mish(x):
     -------
     object
         Activated conv layer
-
     """
     return x * tf.math.tanh(tf.math.softplus(x))
     # return tf.keras.layers.Lambda(lambda x: x*tf.tanh(tf.math.log(1+tf.exp(x))))(x)
@@ -101,7 +99,6 @@ def residual_block(input_layer, input_channel, filter_num1, filter_num2, activat
     -------
     object
         Conv layer
-
     """
     short_cut = input_layer
     conv = convolutional(input_layer, filters_shape=(1, 1, input_channel, filter_num1), activate_type=activate_type)

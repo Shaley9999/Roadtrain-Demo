@@ -38,7 +38,8 @@ def YOLO(input_layer, NUM_CLASS, model='yolov4'):
         return YOLOv3(input_layer, NUM_CLASS)
 
 def YOLOv3(input_layer, NUM_CLASS):
-    """The Yolov3 function
+    """
+    The Yolov3 function
 
     Parameters
     ----------
@@ -51,7 +52,6 @@ def YOLOv3(input_layer, NUM_CLASS):
     ----------
     list[objects]
         List of conv layers at differnt stages in the CNN
-
     """
     route_1, route_2, conv = backbone.darknet53(input_layer)
 
@@ -95,7 +95,8 @@ def YOLOv3(input_layer, NUM_CLASS):
     return [conv_sbbox, conv_mbbox, conv_lbbox]
 
 def YOLOv4(input_layer, NUM_CLASS):
-    """The Yolov4 function
+    """
+    The Yolov4 function
 
     Parameters
     ----------
@@ -108,7 +109,6 @@ def YOLOv4(input_layer, NUM_CLASS):
     ----------
     list[objects]
         List of conv layers at differnt stages in the CNN
-
     """
     route_1, route_2, conv = backbone.cspdarknet53(input_layer)
 
@@ -169,7 +169,8 @@ def YOLOv4(input_layer, NUM_CLASS):
 
 
 def decode_train(conv_output, output_size, NUM_CLASS, STRIDES, ANCHORS, i=0, XYSCALE=[1, 1, 1]):
-    """Function to decode the incoming Tensor for training new models
+    """
+    Function to decode the incoming Tensor for training new models
 
     Parameters
     ----------
@@ -192,7 +193,6 @@ def decode_train(conv_output, output_size, NUM_CLASS, STRIDES, ANCHORS, i=0, XYS
     ----------
     List[objects]
         Concatenated list of predictions and confidence scores
-
     """
     conv_output = tf.reshape(conv_output,
                              (tf.shape(conv_output)[0], output_size, output_size, 3, 5 + NUM_CLASS))
@@ -217,7 +217,8 @@ def decode_train(conv_output, output_size, NUM_CLASS, STRIDES, ANCHORS, i=0, XYS
     return tf.concat([pred_xywh, pred_conf, pred_prob], axis=-1)
 
 def decode(conv_output, output_size, NUM_CLASS, STRIDES, ANCHORS, i=0, XYSCALE=[1, 1, 1]):
-    """Function to decode the incoming Tensor
+    """
+    Function to decode the incoming Tensor
 
     Parameters
     ----------
@@ -242,7 +243,6 @@ def decode(conv_output, output_size, NUM_CLASS, STRIDES, ANCHORS, i=0, XYSCALE=[
         Prediction of variables
     object
         Prediction probabilities
-
     """
     batch_size = tf.shape(conv_output)[0]
     conv_output = tf.reshape(conv_output,
@@ -274,7 +274,8 @@ def decode(conv_output, output_size, NUM_CLASS, STRIDES, ANCHORS, i=0, XYSCALE=[
 
 
 def filter_boxes(box_xywh, scores, score_threshold=0.4, input_shape = tf.constant([416,416])):
-    """Filter out the bounding boxes that are below the score threshold
+    """
+    Filter out the bounding boxes that are below the score threshold
 
     Parameters
     ----------
@@ -291,7 +292,6 @@ def filter_boxes(box_xywh, scores, score_threshold=0.4, input_shape = tf.constan
     ----------
     tuple
         tuple of the boxes along with the confidence level
-
     """
     scores_max = tf.math.reduce_max(scores, axis=-1)
 
@@ -320,7 +320,8 @@ def filter_boxes(box_xywh, scores, score_threshold=0.4, input_shape = tf.constan
     return (boxes, pred_conf)
 
 def compute_loss(pred, conv, label, bboxes, STRIDES, NUM_CLASS, IOU_LOSS_THRESH, i=0):
-    """Computes the losses of the prediction using the iou functions 
+    """
+    Computes the losses of the prediction using the iou functions 
 
     Parameters
     ----------
@@ -349,7 +350,6 @@ def compute_loss(pred, conv, label, bboxes, STRIDES, NUM_CLASS, IOU_LOSS_THRESH,
         conf_loss
     object
         prob_loss
-
     """
     conv_shape  = tf.shape(conv)
     batch_size  = conv_shape[0]
