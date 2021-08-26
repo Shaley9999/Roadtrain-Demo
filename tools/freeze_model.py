@@ -12,8 +12,11 @@ def _batch_norm_fn(x, scope=None):
 
 def create_link(
         incoming, network_builder, scope, nonlinearity=tf.nn.elu,
-        weights_initializer=tf.truncated_normal_initializer(stddev=1e-3),
-        regularizer=None, is_first=False, summarize_activations=True):
+        weights_initializer=None, regularizer=None, is_first=False, summarize_activations=True):
+    
+    if weights_initializer is None:
+        weights_initializer=tf.truncated_normal_initializer(stddev=1e-3)
+
     if is_first:
         network = incoming
     else:
