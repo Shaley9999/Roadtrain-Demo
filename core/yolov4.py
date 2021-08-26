@@ -15,7 +15,8 @@ from core.config import cfg
 # ANCHORS = utils.get_anchors(cfg.YOLO.ANCHORS)
 
 def YOLO(input_layer, NUM_CLASS, model='yolov4'):
-    """This function calls either YOLOv4 or YOLOv3
+    """
+    This function calls either YOLOv4 or YOLOv3
 
     Parameters
     ----------
@@ -30,7 +31,6 @@ def YOLO(input_layer, NUM_CLASS, model='yolov4'):
     ----------
     list[objects]
         List of conv layers at differnt stages in the CNN
-
     """
     if model == 'yolov4':
         return YOLOv4(input_layer, NUM_CLASS)

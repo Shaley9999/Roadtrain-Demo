@@ -134,7 +134,6 @@ def create_box_encoder(model_filename, input_name="images",
                     0., 255., image_shape).astype(np.uint8)
             image_patches.append(patch)
         image_patches = np.asarray(image_patches)
-        print(type(image_encoder(image_patches, batch_size)))
         return image_encoder(image_patches, batch_size)
 
     return encoder
