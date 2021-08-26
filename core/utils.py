@@ -146,7 +146,11 @@ def format_boxes(bboxes, image_height, image_width):
     return bboxes
 
 # main function that draws the bounding boxes
-def draw_bbox(image, bboxes, info = False, show_label=True, classes=read_class_names(cfg.YOLO.CLASSES)):
+def draw_bbox(image, bboxes, info = False, show_label=True, classes=None):
+
+    if classes is None:
+        classes=read_class_names(cfg.YOLO.CLASSES)
+
     num_classes = len(classes)
     image_h, image_w, _ = image.shape
     hsv_tuples = [(1.0 * x / num_classes, 1., 1.) for x in range(num_classes)]
@@ -184,13 +188,18 @@ def draw_bbox(image, bboxes, info = False, show_label=True, classes=read_class_n
     return image
 
 def bbox_iou(bboxes1, bboxes2):
-    """
-    @param bboxes1: (a, b, ..., 4)
-    @param bboxes2: (A, B, ..., 4)
+    """TEST
+
+    Parameters
+    ----------
+    bboxes1: (a, b, ..., 4)
+    bboxes2: (A, B, ..., 4)
         x:X is 1:n or n:n or n:1
-    @return (max(a,A), max(b,B), ...)
-    ex) (4,):(3,4) -> (3,)
-        (2,1,4):(2,3,4) -> (2,3)
+
+    Returns
+    -------
+    Test
+
     """
     bboxes1_area = bboxes1[..., 2] * bboxes1[..., 3]
     bboxes2_area = bboxes2[..., 2] * bboxes2[..., 3]
@@ -224,14 +233,18 @@ def bbox_iou(bboxes1, bboxes2):
 
 
 def bbox_giou(bboxes1, bboxes2):
-    """
-    Generalized IoU
-    @param bboxes1: (a, b, ..., 4)
-    @param bboxes2: (A, B, ..., 4)
+    """Generalized IoU
+    
+    Parameters
+    ----------
+    bboxes1: (a, b, ..., 4)
+    bboxes2: (A, B, ..., 4)
         x:X is 1:n or n:n or n:1
-    @return (max(a,A), max(b,B), ...)
-    ex) (4,):(3,4) -> (3,)
-        (2,1,4):(2,3,4) -> (2,3)
+    
+    Returns
+    -------
+    Test
+
     """
     bboxes1_area = bboxes1[..., 2] * bboxes1[..., 3]
     bboxes2_area = bboxes2[..., 2] * bboxes2[..., 3]
@@ -275,14 +288,18 @@ def bbox_giou(bboxes1, bboxes2):
 
 
 def bbox_ciou(bboxes1, bboxes2):
-    """
-    Complete IoU
-    @param bboxes1: (a, b, ..., 4)
-    @param bboxes2: (A, B, ..., 4)
+    """Complete IoU
+
+    Parameters
+    ----------
+    bboxes1: (a, b, ..., 4)
+    bboxes2: (A, B, ..., 4)
         x:X is 1:n or n:n or n:1
-    @return (max(a,A), max(b,B), ...)
-    ex) (4,):(3,4) -> (3,)
-        (2,1,4):(2,3,4) -> (2,3)
+
+    Returns
+    -------
+    Test
+
     """
     bboxes1_area = bboxes1[..., 2] * bboxes1[..., 3]
     bboxes2_area = bboxes2[..., 2] * bboxes2[..., 3]

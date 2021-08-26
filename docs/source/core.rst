@@ -2,7 +2,7 @@ core package
 ===============
 
 
-core.yolov4 module DONE But not showing!
+core.yolov4 module
 ------------------------------------------
 
 .. automodule:: core.yolov4
@@ -26,7 +26,7 @@ core.common module
    :undoc-members:
    :show-inheritance:
 
-core.dataset module Half DONE
+core.dataset module
 ------------------------------
 
 .. automodule:: core.dataset 
@@ -34,7 +34,7 @@ core.dataset module Half DONE
    :undoc-members:
    :show-inheritance:
 
-core.utils\_y module Half DONE
+core.utils\_y module
 -------------------------------
 
 .. automodule:: core.utils_y
@@ -42,7 +42,7 @@ core.utils\_y module Half DONE
    :undoc-members:
    :show-inheritance:
 
-core.utils module Half DONE
+core.utils module
 ----------------------------
 
 .. automodule:: core.utils

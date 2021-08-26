@@ -13,6 +13,7 @@ There are two main ways of going about object detection:
 
         In the second stage, it will apply a Convolution Neural Network to these regions
         to detect the presence of an object.
+        
     One of the problems with this method is, we have to execute the detector in each of the ROI,
     and that makes is slow and computationally expensive. One example of this type of algorithm is R-CNN.
 
