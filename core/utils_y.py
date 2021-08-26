@@ -209,27 +209,27 @@ def draw_bbox(image, bboxes, info=False, counted_classes=None, show_label=True, 
                 cv2.putText(image, bbox_mess, (c1[0], np.float32(c1[1] - 2)), cv2.FONT_HERSHEY_SIMPLEX,
                             fontScale, white, bbox_thick // 2, lineType=cv2.LINE_AA)
 
-            if counted_classes != None:
-                for key, value in counted_classes.items():
-                    if key == "bench" or key == "bus" or key == "wine glass" or key == "sandwich" or key == "toothbrush":
-                        cv2.putText(image, "{}es detected: {}".format(key, value), (indent, offset),
-                                    cv2.FONT_HERSHEY_COMPLEX_SMALL, font_size, red, font_thickness)
-                    elif key == "sheep" or key == "skis" or key == "scissors":
-                        cv2.putText(image, "{} detected: {}".format(key, value), (indent, offset),
-                                    cv2.FONT_HERSHEY_COMPLEX_SMALL, font_size, red, font_thickness)
-                    elif key == "knife":
-                        cv2.putText(image, "knives detected: {}".format(value), (indent, offset),
-                                    cv2.FONT_HERSHEY_COMPLEX_SMALL, font_size, red, font_thickness)
-                    elif key == "mouse":
-                        cv2.putText(image, "mice detected: {}".format(value), (indent, offset),
-                                    cv2.FONT_HERSHEY_COMPLEX_SMALL, font_size, red, font_thickness)
-                    elif key == "person":
-                        cv2.putText(image, "people detected: {}".format(value), (indent, offset),
-                                    cv2.FONT_HERSHEY_COMPLEX_SMALL, font_size, blue, font_thickness)
-                    else:
-                        cv2.putText(image, "{}s detected: {}".format(key, value), (indent, offset),
-                                    cv2.FONT_HERSHEY_COMPLEX_SMALL, font_size, red, font_thickness)
-                    offset += 40
+    if counted_classes != None:
+        for key, value in counted_classes.items():
+            if key == "bench" or key == "bus" or key == "wine glass" or key == "sandwich" or key == "toothbrush":
+                cv2.putText(image, "{}es detected: {}".format(key, value), (indent, offset),
+                            cv2.FONT_HERSHEY_COMPLEX_SMALL, font_size, red, font_thickness)
+            elif key == "sheep" or key == "skis" or key == "scissors":
+                cv2.putText(image, "{} detected: {}".format(key, value), (indent, offset),
+                            cv2.FONT_HERSHEY_COMPLEX_SMALL, font_size, red, font_thickness)
+            elif key == "knife":
+                cv2.putText(image, "knives detected: {}".format(value), (indent, offset),
+                            cv2.FONT_HERSHEY_COMPLEX_SMALL, font_size, red, font_thickness)
+            elif key == "mouse":
+                cv2.putText(image, "mice detected: {}".format(value), (indent, offset),
+                            cv2.FONT_HERSHEY_COMPLEX_SMALL, font_size, red, font_thickness)
+            elif key == "person":
+                cv2.putText(image, "people detected: {}".format(value), (indent, offset),
+                            cv2.FONT_HERSHEY_COMPLEX_SMALL, font_size, blue, font_thickness)
+            else:
+                cv2.putText(image, "{}s detected: {}".format(key, value), (indent, offset),
+                            cv2.FONT_HERSHEY_COMPLEX_SMALL, font_size, red, font_thickness)
+            offset += 40
 
     return image
 
