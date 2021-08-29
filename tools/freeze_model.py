@@ -44,10 +44,16 @@ def create_link(
 
 
 def create_inner_block(
-        incoming, scope, nonlinearity=tf.nn.elu,
-        weights_initializer=tf.truncated_normal_initializer(1e-3),
-        bias_initializer=tf.zeros_initializer(), regularizer=None,
+        incoming, scope, nonlinearity=None,
+        weights_initializer=None,
+        bias_initializer=None, regularizer=None,
         increase_dim=False, summarize_activations=True):
+    if nonlinearity is None:
+        nonlinearity=tf.nn.elu
+    if weights_initializer is None:
+        weights_initializer=tf.truncated_normal_initializer(1e-3)
+    if bias_initializer is None:
+        bias_initializer=tf.zeros_initializer()
     n = incoming.get_shape().as_list()[-1]
     stride = 1
     if increase_dim:
