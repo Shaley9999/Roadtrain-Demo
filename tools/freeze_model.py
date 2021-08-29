@@ -11,9 +11,11 @@ def _batch_norm_fn(x, scope=None):
 
 
 def create_link(
-        incoming, network_builder, scope, nonlinearity=tf.nn.elu,
+        incoming, network_builder, scope, nonlinearity=None,
         weights_initializer=None, regularizer=None, is_first=False, summarize_activations=True):
     
+    if nonlinearity is None:
+        nonlinearity=tf.nn.elu
     if weights_initializer is None:
         weights_initializer=tf.truncated_normal_initializer(stddev=1e-3)
 
@@ -79,10 +81,15 @@ def create_inner_block(
 
 
 def residual_block(incoming, scope, nonlinearity=tf.nn.elu,
-                   weights_initializer=tf.truncated_normal_initializer(1e3),
-                   bias_initializer=tf.zeros_initializer(), regularizer=None,
+                   weights_initializer=None,
+                   bias_initializer=None, regularizer=None,
                    increase_dim=False, is_first=False,
                    summarize_activations=True):
+    if weights_initializer is None:
+        weights_initializer=tf.truncated_normal_initializer(1e3)
+    if bias_initializer is None:
+        bias_initializer=tf.zeros_initializer()
+
 
     def network_builder(x, s):
         return create_inner_block(
