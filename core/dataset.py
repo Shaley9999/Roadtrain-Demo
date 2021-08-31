@@ -40,7 +40,12 @@ class Dataset(object):
         self.batch_count = 0
 
     def load_annotations(self):
-        """TEST
+        """loads the annotations of the dataset
+
+        Returns
+        -------
+        list
+            A list of the annotations within the dataset
         """
         with open(self.annot_path, "r") as f:
             txt = f.readlines()
@@ -182,8 +187,21 @@ class Dataset(object):
                 raise StopIteration
 
     def random_horizontal_flip(self, image, bboxes):
-        """TEST
-        Random hoz flip
+        """performs a random horizontal flip of the image for use in training
+
+        Parameters
+        ----------
+        image : ndarray
+            The image itself ready to be flipped if needed
+        bboxes : ndarray
+            Array of the bounding boxes
+
+        Returns
+        -------
+        ndarray
+            The flipped image
+        ndarray
+            The bounding box of the image
         """
         if random.random() < 0.5:
             _, w, _ = image.shape
@@ -193,8 +211,21 @@ class Dataset(object):
         return image, bboxes
 
     def random_crop(self, image, bboxes):
-        """TEST
-        Random crop
+        """performs a random horizontal crop of the image for use in training
+
+        Parameters
+        ----------
+        image : ndarray
+            The image itself ready to be cropped if needed
+        bboxes : ndarray
+            Array of the bounding boxes
+
+        Returns
+        -------
+        ndarray
+            The cropped image
+        ndarray
+            The bounding box of the image
         """
         if random.random() < 0.5:
             h, w, _ = image.shape
@@ -232,8 +263,21 @@ class Dataset(object):
         return image, bboxes
 
     def random_translate(self, image, bboxes):
-        """TEST
-        Random translate
+        """performs a random translate of the image for use in training
+
+        Parameters
+        ----------
+        image : ndarray
+            The image itself ready to be translated if needed
+        bboxes : ndarray
+            Array of the bounding boxes
+
+        Returns
+        -------
+        ndarray
+            The translated image
+        ndarray
+            The bounding box of the image
         """
         if random.random() < 0.5:
             h, w, _ = image.shape
@@ -262,8 +306,25 @@ class Dataset(object):
         return image, bboxes
 
     def parse_annotation(self, annotation):
-        """TEST
-        Parse annotation
+        """Performs parsing of the annotations of the dataset
+
+        Parameters
+        ----------
+        annotation : str
+            A single annotation
+
+        Returns
+        -------
+        ndarray 
+            The image itself
+        ndarray 
+            The bbox of the annotation
+
+
+        Raises
+        ------
+        KeyError
+            Raises a KeyError if the path does not exist
         """
         line = annotation.split()
         image_path = line[0]
@@ -301,9 +362,19 @@ class Dataset(object):
 
 
     def preprocess_true_boxes(self, bboxes):
-        """TEST
-        Pre pro true boxes
+        """Processes the ground truth bounding boxes
+
+        Parameters
+        ----------
+        bboxes : ndarray 
+            The bounding boxes of the images
+
+        Returns
+        -------
+        ndarrays
+            The processed bounding box split up into the needed parts
         """
+ 
         label = [
             np.zeros(
                 (

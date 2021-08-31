@@ -92,6 +92,18 @@ def load_weights(model, weights_file, model_name='yolov4'):
 
 
 def read_class_names(class_file_name):
+    """Reads in the classname file and converts it into a dict
+
+    Parameters
+    ----------
+    class_file_name : .names
+        The .names file of all the class names, separated by a new line
+
+    Returns
+    -------
+    dict
+        The IDs and names of the class names
+    """
     names = {}
     with open(class_file_name, 'r') as data:
         for ID, name in enumerate(data):
@@ -100,7 +112,25 @@ def read_class_names(class_file_name):
 
 
 def load_config(FLAGS):
+    """Loads the config file
 
+    Parameters
+    ----------
+    FLAGS : flag
+        The flag that determine which model is being used
+
+    Returns
+    -------
+    ndarray
+        Array[int] of the strides
+    ndarray
+        Array[int] of the anchors
+    int
+        The amount of classes to be classified (80 for coco) 
+    ndarray
+        Array[float] of the XYscales
+    
+    """
     STRIDES = np.array(cfg.YOLO.STRIDES)
     if FLAGS.model == 'yolov4':
         ANCHORS = get_anchors(cfg.YOLO.ANCHORS)
@@ -112,8 +142,20 @@ def load_config(FLAGS):
     return STRIDES, ANCHORS, NUM_CLASS, XYSCALE
 
 
-def get_anchors(anchors_path):
-    anchors = np.array(anchors_path)
+def get_anchors(anchors):
+    """Fetches and convers the anchors list into a formatted numpy array
+
+    Parameters
+    ----------
+    anchors : list[int]
+        The anchors ready to be reshaped and converted
+
+    Returns
+    -------
+    ndarray
+        The reshaped anchors
+    """
+    anchors = np.array(anchors)
 
     return anchors.reshape(3, 3, 2)
 
@@ -141,6 +183,22 @@ def image_preprocess(image, target_size, gt_boxes=None):
 
 # helper function to convert bounding boxes from normalized ymin, xmin, ymax, xmax ---> xmin, ymin, xmax, ymax
 def format_boxes(bboxes, image_height, image_width):
+    """Formats the bounding boxes
+
+    Parameters
+    ----------
+    bboxes : ndarray
+        The bounding boxes
+    image_height : int
+        The height of the image
+    image_width : int
+        The width of the image
+
+    Returns
+    -------
+    ndarray
+        The now formatted bounding boxes
+    """
     for box in bboxes:
         ymin = int(box[0] * image_height)
         xmin = int(box[1] * image_width)
@@ -184,6 +242,7 @@ def draw_bbox(image, bboxes, info=False, counted_classes=None, show_label=True, 
         coor = out_boxes[i]
         fontScale = 0.5
         score = out_scores[i]
+        score = round(score*100, 1)
         class_ind = int(out_classes[i])
         class_name = classes[class_ind]
         if class_name not in allowed_classes:
@@ -195,11 +254,11 @@ def draw_bbox(image, bboxes, info=False, counted_classes=None, show_label=True, 
             cv2.rectangle(image, c1, c2, bbox_color, bbox_thick)
 
             if info:
-                print("Object found: {}, Confidence: {:.2f}, BBox Coords (xmin, ymin, xmax, ymax): {}, {}, {}, {} ".format(
+                print("Object found: {}, Confidence: {}, BBox Coords (xmin, ymin, xmax, ymax): {}, {}, {}, {} ".format(
                     class_name, score, coor[0], coor[1], coor[2], coor[3]))
 
             if show_label:
-                bbox_mess = '%s: %.2f' % (class_name, score)
+                bbox_mess = '%s: %s' % (class_name, score)
                 t_size = cv2.getTextSize(
                     bbox_mess, 0, fontScale, thickness=bbox_thick // 2)[0]
                 c3 = (c1[0] + t_size[0], c1[1] - t_size[1] - 3)
