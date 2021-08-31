@@ -423,10 +423,28 @@ def bbox_ciou(bboxes1, bboxes2):
     return ciou
 
 def nms(bboxes, iou_threshold, sigma=0.3, method='nms'):
-    """
-    :param bboxes: (xmin, ymin, xmax, ymax, score, class)
+    """[summary]
 
-    Note: soft-nms, https://arxiv.org/pdf/1704.04503.pdf
+    Parameters
+    ----------
+    bboxes : [type]
+        (xmin, ymin, xmax, ymax, score, class)
+    iou_threshold : [type]
+        [description]
+    sigma : float, optional
+        [description], by default 0.3
+    method : str, optional
+        [description], by default 'nms'
+
+    Returns
+    -------
+    [type]
+        [description]
+    
+    Note
+    ----
+
+    soft-nms, https://arxiv.org/pdf/1704.04503.pdf
           https://github.com/bharatsingh430/soft-nms
     """
     classes_in_img = list(set(bboxes[:, 5]))
